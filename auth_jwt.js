@@ -2,20 +2,27 @@
 var passport = require('passport');
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
+var User = require('../modules/module');
 
-var opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
-opts.secretOrKey = process.env.SECRET_KEY;
+    var opts = {};
+    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
+    opts.secretOrKey = "mysecretkeythatshouldnotbestoredhere";
 
-passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-    var user = db.find(jwt_payload.id);
+    passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
 
-    if (user) {
-        done(null, user);
-    } else {
-        done(null, false);
-    }
-}));
 
-exports.isAuthenticated = passport.authenticate('jwt', { session : false });
-exports.secret = opts.secretOrKey ;
+        User.findOne({name:jwt_payload.name,username:jwt_payload.username},function(err,user) {
+            if(err)
+            { return done(err,false);
+            }
+            if(user){
+               return done(null,user);
+            }
+            else {
+              return   done(null,false);
+            }
+        });
+        }));
+
+    exports.isAuthenticated = passport.authenticate('jwt', {session: false});
+    exports.secret = opts.secretOrKey;

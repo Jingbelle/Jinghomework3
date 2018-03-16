@@ -25,10 +25,12 @@ exports.login=function(req,res){
         if(err)
             res.send(err);
         else {
-       //     return res.send(user);
-            var userToken={name:user.name, usernmae:user.username};
-          var token=jwt.sign(userToken,process.env.SECRET_KEY);
-          return res.json({success: true, token: 'JWT '+token});
+          // res.json(user);
+            var userToken={name:user.name,username:user.username};
+           var token=jwt.sign(userToken,"mysecretkeythatshouldnotbestoredhere");
+
+           return res.json({success: true, token: 'JWT '+token});
+
         }
     });
 };
