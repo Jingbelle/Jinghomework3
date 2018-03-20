@@ -1,5 +1,5 @@
 module.exports=function(app) {
-    var sectodo = require('../controller/movies');
+    var sectodo = require('./movies');
    app.route('/signup')
        .post(sectodo.newuser);
    app.route('/signin')

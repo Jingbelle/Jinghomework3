@@ -4,7 +4,7 @@ var authJwtController=require('./auth_jwt');
 
 
 module.exports = function(app) {
-    var todoList = require('../controller/controller');
+    var todoList = require('./controller');
 
     app.route('/tasks')
         .get(authJwtController.isAuthenticated,function(req,res) {
