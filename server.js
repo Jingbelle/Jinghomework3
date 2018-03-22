@@ -58,8 +58,9 @@ router.route('/movies')
 
 
 app.use('/', router);
-app.listen(4000);
 
 
-console.log('todo list RESTful API server started on: ' +'4000' )
+app.listen(process.env.PORT || 4000);
+
+console.log('todo list RESTful API server started on: ' +'4000' );
 
