@@ -1,35 +1,65 @@
+
 var express = require('express'),
     app = express(),
     port = process.env.PORT || 3000,
     mongoose = require('mongoose'),
-    Movie = require('./moviemo'),
-    User = require('./module'),
 
-    //created model loading here
-    bodyParser = require('body-parser');
-var passport=require('passport');
-var jwt = require("jsonwebtoken");
-var auth=require('./auth_jwt');
+    User = require('./moviemodule'),
+    users=require('./usermodule');
+require('./userct.js');
+//created model loading here
 
-
-// mongoose instance connection url connection
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://admintest:admintest@ds163418.mlab.com:63418/webdb');
-app.use(bodyParser.urlencoded({ extended: true }));
+var http = require('http');
+var bodyParser = require('body-parser');
+var passport = require('passport');
+
+var authJwtController = require('./auth_jwt');
+
+var jwt = require('jsonwebtoken');
+
+var app = express();
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(passport.initialize());
+var rou=require('./userou.js');
+rou(app);
+var router = express.Router();
+
+var con=require('./moviect.js');
+
+router.route('/movies')
+    .post(authJwtController.isAuthenticated,function (req, res) {
+        con.list_all_tasks(req,res);
+
+    });
+router.route('/movies')
+    .post(authJwtController.isAuthenticated,function (req, res) {
+        con.create_a_task(req,res);
+
+    });
+router.route('/movies/:taskId')
+    .post(authJwtController.isAuthenticated,function (req, res) {
+        con.read_a_task(req,res);
+
+    });
+router.route('/movies')
+    .post(authJwtController.isAuthenticated,function (req, res) {
+        con.update_a_task(req,res);
+
+    });
+router.route('/movies')
+    .post(authJwtController.isAuthenticated,function (req, res) {
+        con.delete_a_task(req,res);
+
+    });
 
 
+app.use('/', router);
+app.listen(4000);
 
 
-var routes = require('./route'); //importing route
-routes(app); //register the route
-var rou = require('./route2'); //importing route
-rou(app); //register the route
+console.log('todo list RESTful API server started on: ' +'4000' )
 
-
-
-app.listen(port);
-
-
-console.log('todo list RESTful API server started on: ' + port);
