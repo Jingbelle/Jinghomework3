@@ -1,7 +1,7 @@
 
 var express = require('express'),
     app = express(),
- 
+
     mongoose = require('mongoose'),
 
     User = require('./moviemodule'),
@@ -31,7 +31,7 @@ var router = express.Router();
 var con=require('./moviect.js');
 
 router.route('/movies')
-    .post(authJwtController.isAuthenticated,function (req, res) {
+    .get(authJwtController.isAuthenticated,function (req, res) {
         con.list_all_tasks(req,res);
 
     });
@@ -41,17 +41,17 @@ router.route('/movies')
 
     });
 router.route('/movies/:taskId')
-    .post(authJwtController.isAuthenticated,function (req, res) {
+    .get(authJwtController.isAuthenticated,function (req, res) {
         con.read_a_task(req,res);
 
     });
-router.route('/movies')
-    .post(authJwtController.isAuthenticated,function (req, res) {
+router.route('/movies/:taskId')
+    .put(authJwtController.isAuthenticated,function (req, res) {
         con.update_a_task(req,res);
 
     });
-router.route('/movies')
-    .post(authJwtController.isAuthenticated,function (req, res) {
+router.route('/movies/:taskId')
+    .delete(authJwtController.isAuthenticated,function (req, res) {
         con.delete_a_task(req,res);
 
     });
