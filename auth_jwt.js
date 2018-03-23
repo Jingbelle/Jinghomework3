@@ -6,7 +6,7 @@ var User = require('./usermodule');
 
     var opts = {};
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
-    opts.secretOrKey = "mysecretkeythatshouldnotbestoredhere";
+    opts.secretOrKey = process.env.MYKEY;
 
     passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
 

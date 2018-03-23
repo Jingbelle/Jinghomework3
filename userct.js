@@ -27,7 +27,7 @@ exports.login=function(req,res){
         else {
           // res.json(user);
             var userToken={name:user.name,username:user.username};
-           var token=jwt.sign(userToken,"mysecretkeythatshouldnotbestoredhere");
+           var token=jwt.sign(userToken,process.env.MYKEY);
 
            return res.json({success: true, token: 'JWT '+token});
 

@@ -14,7 +14,7 @@ mongoose.connect('mongodb://admintest:admintest@ds163418.mlab.com:63418/webdb');
 var http = require('http');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-
+require('dotenv').config();
 var authJwtController = require('./auth_jwt');
 
 var jwt = require('jsonwebtoken');

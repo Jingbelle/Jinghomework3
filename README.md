@@ -1,5 +1,3 @@
 # week6
+postman link [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/fc4a38f25e49c9fb1a6f)
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/992ddb704b5b8d5cff68)
-
-heroku link is https://webapihome.herokuapp.com/
